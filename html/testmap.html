@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 400px; width: 490px; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKTcW0qnQgsXmZ7jYeLLsO6nFE7oiIfEU&sensor=true"></script>
+    </script>
+    <script type="text/javascript">
+      var zoomLevel = 3;
+      var selectedCity = null;
+      var city = {
+        "default": {
+          zoomlevel: 3,
+          lat: 40,
+          long: -99
+        },
+        "Chicago, Illinois - All Airports (CHI)": {
+          zoomlevel: 9,
+          lat: 41.884587,
+          long: -87.837303,
+          airports: [
+            {
+              lat: 41.974742,
+              long: -87.902878,
+              title: "Chicago, Illinois - O'Hare Airport (ORD)"
+            },
+            {
+              lat: 41.783025,
+              long: -87.752502,
+              title: "Chicago, Illinois - Midway Airport (MDW)"
+            }
+          ]
+        },
+        "Chicago, Illinois - O'Hare Airport (ORD)": {
+          zoomlevel: 9,
+          lat: 41.884587,
+          long: -87.837303,
+          airports: [
+            {
+              lat: 41.974742,
+              long: -87.902878,
+              title: "Chicago, Illinois - O'Hare Airport (ORD)"
+            }
+          ]
+        },
+        "Chicago, Illinois - Midway Airport (MDW)": {
+          zoomlevel: 9,
+          lat: 41.884587,
+          long: -87.837303,
+          airports: [
+            {
+              lat: 41.783025,
+              long: -87.752502,
+              title: "Chicago, Illinois - Midway Airport (MDW)"
+            }
+          ]
+        },
+        "New York - All Airports (NYC)": {
+          zoomlevel: 9,
+          lat: 40.775917,
+          long: -73.873787,
+          airports: [
+            {
+              lat: 40.775917,
+              long: -73.873787,
+              title: "New York - LaGuardia Airport (LGA)"
+            },
+            {
+              lat: 40.637850,
+              long: -73.780060,
+              title: "New York - JFK Airport (JFK)"
+            }
+          ]
+        },
+        "New York - LaGuardia Airport (LGA)": {
+          zoomlevel: 9,
+          lat: 40.775917,
+          long: -73.873787,
+          airports: [
+            {
+              lat: 40.775917,
+              long: -73.873787,
+              title: "New York - LaGuardia Airport (LGA)"
+            },
+          ]
+        },
+        "New York - JFK Airport (JFK)": {
+          zoomlevel: 9,
+          lat: 40.775917,
+          long: -73.873787,
+          airports: [
+            {
+              lat: 40.637850,
+              long: -73.780060,
+              title: "New York - JFK Airport (JFK)"
+            }
+          ]
+        },
+        "Atlanta, Georgia - Hartsfield-Jackson Airport (ATL)": {
+          zoomlevel: 10,
+          lat: 33.763796,
+          long: -84.376373,
+          airports: [
+            {
+              lat: 33.635977,
+              long: -84.429932,
+              title: "Atlanta, Georgia - Hartsfield-Jackson Airport (ATL)"
+            }
+          ]
+        }
+      };
+      function getURLParameter(name) {
+            return decodeURI(
+                (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+            );
+        }
+
+      if(getURLParameter("city") != "null"){
+        selectedCity = city[getURLParameter("city")];
+      }
+      else if(getURLParameter("setValue") != "null"){
+        selectedCity = city.default;
+        selectedCity.drawPolyline = "true";
+        selectedCity.airports = [];
+        var fromCity = (getURLParameter("fromCity"));
+        selectedCity.airports.push({lat: city[fromCity].airports[0].lat, long: city[fromCity].airports[0].long, title: fromCity});
+        var toCity = (getURLParameter("toCity"));
+        selectedCity.airports.push({lat: city[toCity].airports[0].lat, long: city[toCity].airports[0].long, title: toCity});
+      }
+      else{
+        selectedCity = city.default;
+      }
+
+      function initialize() {
+        var myLatlng = new google.maps.LatLng(selectedCity.lat, selectedCity.long);
+        var mapOptions = {
+          center: myLatlng,
+          zoom: selectedCity.zoomlevel,
+          disableDefaultUI: true,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        if(selectedCity.airports != undefined){
+          $.each(selectedCity.airports, function(index, obj){
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(obj.lat, obj.long),
+                map: map,
+                title: obj.title
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+              //window.parent.jQuery("#fromCity").val("Hello");
+              //alert($(window.parent.frames[0].parent.frames[0].document.body).html());
+            });
+          });
+        }
+
+        if(selectedCity.drawPolyline!=null){
+          var flightPlanCoordinates = [
+            new google.maps.LatLng(selectedCity.airports[0].lat, selectedCity.airports[0].long),
+            new google.maps.LatLng(selectedCity.airports[1].lat, selectedCity.airports[1].long)
+          ];
+          var flightPath = new google.maps.Polyline({
+            path: flightPlanCoordinates,
+            strokeColor: "#000000",
+            strokeOpacity: 1.0,
+            strokeWeight: 1
+          });
+
+          flightPath.setMap(map);
+        }
+
+
+      }
+//$(window.parent.frames[0].document.body)
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+
+    </script>
+  </head>
+  <body>
+      <script type="text/javascript">
+        
+      </script>
+    <div id="map-canvas"/>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+body{
+	margin: 0px;
+	font-family: Roboto, Arial, sans-serif;
+	font-size: 12px;
+}
+#completeBG{
+	background: url(../images/orbitzCompleteBG.png);
+	height: 2168px;
+	width: 999px;
+}
+
+#searchBot{
+	position: absolute;
+	width: 410px;
+	height: 550px;
+	background-color: #E7E7E7;
+	border: 1px solid #999;
+	margin-left: 30px;
+	margin-top: 200px;
+	-webkit-box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);;
+	box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+#searchBotBG{
+	background: url(../images/FormFields.png);
+	width: 371px;
+	height: 491px;
+	margin-left: 10px;
+	margin-top: 35px;
+}
+
+.expandLink{
+	position: absolute;
+	margin-left: 360px;
+	margin-top: 60px;
+	white-space: nowrap;
+	cursor: pointer;
+	color: rgb(0, 177, 255);
+}
+
+.expandLink .text{
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+}
+.expandLink .arrow{
+	margin-left: 31px;
+	margin-top: 30px;
+}
+
+.inputCity{
+	position: absolute;
+	border: none;
+	height: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+    position: absolute;
+}
+
+.inputCity.from{
+	margin-top: 50px;
+	margin-left: 10px;
+	width: 168px;
+}
+
+.inputCity.to{
+	margin-top: 50px;
+	margin-left: 193px;
+	width: 168px;
+}
+
+.inputDate{
+	position: absolute;
+	height: 20px;
+	border: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+.inputDate.from{
+	margin-top: 106px;
+	margin-left: 10px;
+	width: 122px;
+}
+
+#map{
+	position: absolute;
+	display: none;
+	border: 1px solid #ccc;
+	height: 400px;
+	width: 490px;
+	top: 0px;
+	margin-left: 400px;
+	margin-top: 30px;
+}
+
+#map iframe{
+	border: 0;
+}
+
+#prodSelector{
+	position: absolute;
+	margin-top: 58px;
+	margin-left: 10px;
+}
